@@ -37,11 +37,19 @@ class VectorSuite extends FunSuite {
   }
 
   test("testAddElement") {
+    vector1.addElement(0, 1)
+    vector1.addElement(0, 2)
+    vector1.addElement(0, 3)
 
+    assert(vector1.getElement(0) == 2)
+    assert(vector1.getElement(1) == 3)
+    assert(vector1.getElement(2) == 4)
   }
 
   test("testSize") {
-    assert(vector1 == )
+    assert(vector1.Size() == Math.sqrt(3))
+    assert(vector2.Size() == Math.sqrt(30))
+    assert(vector3.Size() == Math.sqrt(5))
   }
 
 }
