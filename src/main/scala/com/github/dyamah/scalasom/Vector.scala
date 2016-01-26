@@ -9,17 +9,17 @@ trait Vector {
     */
   def size: Int
 
-  /** このベクトルと内積値を返す
-    *
-    * @param that 内積を計算する対象のベクトル
-    */
-  def *(that : Vector) : Double
-
   /** i番目の要素の値を返す
     *
     * @param i 添字
     */
   def apply(i: Int): Double
+
+  /** このベクトルと内積値を返す
+    *
+    * @param that 内積を計算する対象のベクトル
+    */
+  def *(that : Vector) : Double
 
 
 //  /** #### このメソッドの役割がよくわかりませんでした
