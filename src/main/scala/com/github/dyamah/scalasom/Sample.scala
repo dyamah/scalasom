@@ -16,5 +16,4 @@ object Sample {
 
     println(v1 * v2)
   }
-
 }
