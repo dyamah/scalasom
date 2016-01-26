@@ -21,6 +21,26 @@ trait Vector {
     */
   def *(that : Vector) : Double
 
+  /** ベクトルを scalar 倍したベクトルを返す
+    *
+    * @param scalar 係数
+    * @return scalar 倍したベクトル
+    */
+  def *(scalar : Double) : Vector
+
+  /** このベクトルとの加算したベクトル返す
+    *
+    * @param that 加算を計算する対象のベクトル
+    * @return 加算した結果のベクトル
+    */
+  def +(that : Vector) : Vector
+
+  /** このベクトルとの減算したベクトル返す
+    *
+    * @param that 減算を計算する対象のベクトル
+    * @return 減算した結果のベクトル
+    */
+  def -(that : Vector) : Vector
 
 //  /** #### このメソッドの役割がよくわかりませんでした
 //   * ベクトルを返す
