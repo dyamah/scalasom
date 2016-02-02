@@ -2,6 +2,81 @@ package com.github.dyamah.scalasom
 
 import scala.util.Random
 
+trait SOMtrait {
+  val row: Int
+  val column : Int
+  val dim : Int
+  val radius : Int => Double = { _ => 0.0 }
+}
+
+
+class SOMBuilder {
+
+  var row: Int = 5
+  var column : Int = 5
+  var dim : Int = 10
+  var radius : Int => Double = { _ => 0.0 }
+
+  def withRow(r: Int) : SOMBuilder = {
+    row = r
+    this
+  }
+
+  def build(): SOM = ???
+
+}
+
+case class Cell(i: Int, j: Int, vector: Vector)
+
+
+object SOM {
+
+  val ratioFunction : (Int, Int) => Double = ???
+  val radiusFunction : (Int, Int, Double) => Double = ???
+
+  def foo : Unit = {
+    for(
+      i <- 0 to 10;
+      j <- 0 to 20
+    ) {
+
+    }
+  }
+
+  def bar(name : String): Int = {
+    if (name != null)
+      name.length
+    else
+      0
+  }
+
+  def barOpt(name: Option[String]) : Int = {
+      name.map { _.length }.getOrElse(0)
+  }
+
+
+  def main(args : Array[String]) : Unit = {
+
+
+    val cell = Cell(1, 2, new VectorImpl(Seq()))
+    cell.i
+    cell.j
+    cell.vector
+
+    val map : Seq[Cell] = ???
+
+
+    new SOMtrait {
+      override val row: Int = 1
+      override val dim: Int = 2
+      override val column: Int = 11
+      override val radius = ???
+    }
+
+    new SOMBuilder().withRow(3).withRow(4).build()
+
+  }
+}
 /**
   * Created by dyama on 1/19/16.
   */
@@ -10,6 +85,7 @@ class SOM (private val row : Int, private val column : Int) {
   private val matrix = {
     val init = Array.ofDim[Vector](row, column)
     for (i <- 0 until init.length) {
+
       for (j <- 0 until init(0).length) {
         val vec = for (h <- 0 until 3) yield Random.nextDouble()
         init(i)(j) = new VectorImpl(vec)
@@ -63,6 +139,8 @@ class SOM (private val row : Int, private val column : Int) {
     var row = 0
     var column = 0
     var distance = Double.PositiveInfinity
+
+
     for (i <- 0 until matrix.length) {
       for (j <- 0 until matrix(0).length) {
         if (teacher.distance(matrix(i)(j)) < distance) {
