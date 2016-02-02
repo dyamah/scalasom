@@ -40,17 +40,18 @@ class SOM (private val row : Int, private val column : Int) {
     * @param number 学習回数
     * @return 学習された SOM （途中結果）
     */
-  def train(teacher : Vector, number : Int, teacherN : Int) : Unit = {
+  private def train(teacher : Vector, number : Int, teacherN : Int) : Unit = {
     val (bmuRow, bmuColumn, dis) = bestMatchingUnit(teacher)
     val l = learningRatio(number, teacherN)
     val s = learningRadius(number, teacherN, dis)
-    println(bmuRow, bmuColumn, dis)
-    println()
+    val updateMatrix = Array.ofDim[Vector](row, column)
+    //println(bmuRow, bmuColumn, dis)
     for (x <- -1 to 1)
       for (y <- -1 to 1)
         if (-1 < bmuRow+x && bmuRow+x < row && -1 < bmuColumn+y && bmuColumn+y < column)
-          matrix(bmuRow+x)(bmuColumn+y) = matrix(bmuRow+x)(bmuColumn+y) + ((teacher - matrix(bmuRow+x)(bmuColumn+y)) * l * s)
-    println()
+          //updateMatrix(bmuRow + x)(bmuColumn + y) = matrix(bmuRow + x)(bmuColumn + y) + ((teacher - matrix(bmuRow + x)(bmuColumn + y)) * l * s)
+          matrix(bmuRow + x)(bmuColumn + y) + ((teacher - matrix(bmuRow + x)(bmuColumn + y)) * l * s)
+
   }
 
   /** 現在も matrix の中で学習事例と一番近いユニットを探す
