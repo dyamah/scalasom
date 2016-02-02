@@ -42,6 +42,13 @@ trait Vector {
     */
   def -(that : Vector) : Vector
 
+  /** このベクトルとの距離を返す
+    *
+    * @param that 距離を計算する対象のベクトル
+    * @return 距離
+    */
+  def distance(that : Vector) : Double
+
 //  /** #### このメソッドの役割がよくわかりませんでした
 //   * ベクトルを返す
 //   * @return ベクトル
