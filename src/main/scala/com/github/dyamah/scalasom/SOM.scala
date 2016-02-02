@@ -5,10 +5,8 @@ import scala.util.Random
 /**
   * Created by dyama on 1/19/16.
   */
-class SOM (row : Int, column : Int) {
-  // ここの変数は var でしょうがないのか？？
-  // 学習で使われる事例数
-  private var teacherN = 0
+class SOM (private val row : Int, private val column : Int) {
+
   private val matrix = {
     val init = Array.ofDim[Vector](row, column)
     for (i <- 0 until init.length) {
@@ -29,13 +27,11 @@ class SOM (row : Int, column : Int) {
     * @param teachers 学習事例（全事例）
     * @return 学習された SOM
     */
-  def train(teachers : Seq[Vector]): SOM = {
-    this.teacherN = teachers.length
+  def train(teachers : Seq[Vector]): Unit = {
+    val teacherN = teachers.length
     for ((teacher, i) <- teachers.zipWithIndex) {
-      val som = train(teacher, i)
+      train(teacher, i, teacherN)
     }
-    val som = new SOM()
-    som
   }
 
   /** 1 事例毎の学習
@@ -44,20 +40,17 @@ class SOM (row : Int, column : Int) {
     * @param number 学習回数
     * @return 学習された SOM （途中結果）
     */
-  def train(teacher : Vector, number : Int) : SOM = {
-    val (row, column, dis) = bestMatchingUnit(teacher)
-    val l = learningRatio(number)
-    val s = learningRadius(number, dis)
-
-    // まだ途中です。。。
+  def train(teacher : Vector, number : Int, teacherN : Int) : Unit = {
+    val (bmuRow, bmuColumn, dis) = bestMatchingUnit(teacher)
+    val l = learningRatio(number, teacherN)
+    val s = learningRadius(number, teacherN, dis)
+    println(bmuRow, bmuColumn, dis)
+    println()
     for (x <- -1 to 1)
       for (y <- -1 to 1)
-        if (-1 < row+x || row+x < row-1   || -1 < column+y || column+y < column)
-          for (z <- 0 until teacher.size)
-            matrix(row+x)(column+y) + ((teacher - matrix(row+x)(column+y)) * l * s )
-
-    val som = new SOM()
-    som
+        if (-1 < bmuRow+x && bmuRow+x < row && -1 < bmuColumn+y && bmuColumn+y < column)
+          matrix(bmuRow+x)(bmuColumn+y) = matrix(bmuRow+x)(bmuColumn+y) + ((teacher - matrix(bmuRow+x)(bmuColumn+y)) * l * s)
+    println()
   }
 
   /** 現在も matrix の中で学習事例と一番近いユニットを探す
@@ -86,7 +79,7 @@ class SOM (row : Int, column : Int) {
     * @param t 学習回数
     * @return
     */
-  private def neighbourhood(t : Int) : Double = {
+  private def neighbourhood(t : Int, teacherN : Int) : Double = {
     val N = this.row
     val halfLife = (teacherN / 4).asInstanceOf[Double]
     val initial = (N / 2).asInstanceOf[Double]
@@ -98,7 +91,7 @@ class SOM (row : Int, column : Int) {
     * @param t 学習回数
     * @return
     */
-  private def learningRatio(t : Int) : Double = {
+  private def learningRatio(t : Int, teacherN : Int) : Double = {
     val halfLife = (teacherN / 4).asInstanceOf[Double]
     val initial  = 0.1
     initial * math.exp(-t / halfLife)
@@ -110,8 +103,8 @@ class SOM (row : Int, column : Int) {
     * @param dis BMU の距離
     * @return
     */
-  private def learningRadius(t : Int, dis : Double) : Double = {
-    val s = neighbourhood(t)
+  private def learningRadius(t : Int, teacherN : Int, dis : Double) : Double = {
+    val s = neighbourhood(t, teacherN)
     math.exp(-math.pow(dis, 2) /(2 * math.pow(s, 2)))
   }
 }
