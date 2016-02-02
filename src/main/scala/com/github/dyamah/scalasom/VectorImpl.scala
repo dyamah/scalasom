@@ -2,7 +2,7 @@ package com.github.dyamah.scalasom
 
 class VectorImpl private (private val vector : Array[Double])  extends Vector {
 
-  private def this(seq: Seq[Double]){
+  def this(seq: Seq[Double]){
     this({
       val array = new Array[Double](seq.size)
       seq.copyToArray(array)
@@ -29,7 +29,7 @@ class VectorImpl private (private val vector : Array[Double])  extends Vector {
   override def *(that: Vector): Double = {
     if (this.size != that.size) throw new Exception("Their length of the vector is different")
 
-    vector.indices.foldLeft(0.0){(dot, i) =>  vector(i) * that(i)} // ちょっとおそいかもしれないけど
+    vector.indices.foldLeft(0.0){(dot, i) => dot + vector(i) * that(i)} // ちょっとおそいかもしれないけど
   }
 
   /** ベクトルを scalar 倍したベクトルを返す
@@ -61,5 +61,17 @@ class VectorImpl private (private val vector : Array[Double])  extends Vector {
     if (this.size != that.size) throw new Exception("Their length of the vector is different")
     val subVec = for (i <- 0 until this.size) yield this(i) - that(i)
     new VectorImpl(subVec)
+  }
+
+  /** このベクトルとの距離を返す
+    *
+    * @param that 距離を計算する対象のベクトル
+    * @return 距離
+    */
+  override def distance(that: Vector): Double = {
+    if (this.size != that.size) throw new Exception("Their length of the vector is different")
+    val sub = vector.zipWithIndex.map { case (v, i) => that(i) - v}
+    val mul = sub.map {math.pow(_, 2)}
+    math.pow(mul.sum, 0.5)
   }
 }
