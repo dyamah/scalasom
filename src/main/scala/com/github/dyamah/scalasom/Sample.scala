@@ -27,14 +27,12 @@ object Sample {
     println(v1.distance(v2))
       **/
 
-    val som = new SOM
-    val teachers = {
-      val init = new Array[Vector](1000)
-      for (i <- 0 until init.length) {
-        val teacher = for (j <- 0 until 3) yield Random.nextDouble()
-        init(i) = new VectorImpl(teacher)
-      }
-      init
+    val somBulider = new SOMBuilder
+    // var にするしかない？　設計の問題？
+    var som = somBulider.build()
+    for (i <- 0 until 1000) {
+      val data = for (j <- 0 until 3) yield Random.nextDouble()
+      som = somBulider.train(som, new VectorImpl(data))
     }
 
     println()
