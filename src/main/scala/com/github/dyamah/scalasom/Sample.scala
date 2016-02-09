@@ -26,15 +26,24 @@ object Sample {
     println(v1.distance(v1))
     println(v1.distance(v2))
       **/
-
-    val somBulider = new SOMBuilder
-    // var にするしかない？　設計の問題？
-    var som = somBulider.build()
-    for (i <- 0 until 1000) {
-      val data = for (j <- 0 until 3) yield Random.nextDouble()
-      som = somBulider.train(som, new VectorImpl(data))
+    def initVectorGenerator (i: Int, j: Int) : Vector = {
+      new VectorImpl(for (h <- 0 until 3) yield Random.nextDouble())
+    }
+    def ration(time: Int) : Double = {
+      val init = 0.25
+      val total = 1000.0
+      init*(1 - time/total)
+    }
+    def radius(time: Int, distance: Double) : Double = {
+      def sigmoid(): Double = 1.0 / (1 - math.exp(-time))
+      math.exp(-math.pow(distance, 2) / 2*math.pow(sigmoid(), 2))
     }
 
-    println()
+    var som = new SOMImpl(5, 5, initVectorGenerator)
+    for (i <- 0 until 1000) {
+      som = som.train(initVectorGenerator(3,3), i, ration, radius)
+    }
+    println(som.rows)
+    println(som.columns)
   }
 }
