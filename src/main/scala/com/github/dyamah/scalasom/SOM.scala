@@ -49,7 +49,8 @@ class SOMImpl (private val cells: Seq[Cell]) extends SOM {
 
   require(cells.nonEmpty)
 
-  def apply(i: Int, j: Int) : Cell = cells.filter(_.i == i).filter(_.j == j).head
+  // 不正な場合が入ってきた場合は？ require?? Option ??
+  def apply(i: Int, j: Int) : Cell = cells.filter(cell => cell.i == i && cell.j == j).head
 
   def iterator : Iterator[Cell] = cells.iterator
 
