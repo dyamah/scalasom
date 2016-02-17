@@ -29,19 +29,19 @@ object Sample {
     def initVectorGenerator (i: Int, j: Int) : Vector = {
       new VectorImpl(for (h <- 0 until 3) yield Random.nextDouble())
     }
-    def ration(time: Int) : Double = {
-      val init = 0.25
-      val total = 1000.0
-      init*(1 - time/total)
+    def ratio(time: Int) : Double = {
+      val init = 0.1
+      val total = 250.0
+      init*math.exp(-time/total)
     }
     def radius(time: Int, distance: Double) : Double = {
-      def sigmoid(): Double = 1.0 / (1 - math.exp(-time))
-      math.exp(-math.pow(distance, 2) / 2*math.pow(sigmoid(), 2))
+      def sigmoid(): Double = 1.0 / (1 + math.exp(-time))
+      math.exp(-math.pow(distance, 2) / (2*math.pow(sigmoid(), 2)))
     }
 
     var som = new SOMImpl(5, 5, initVectorGenerator)
     for (i <- 0 until 1000) {
-      som = som.train(initVectorGenerator(3,3), i, ration, radius)
+      som = som.train(initVectorGenerator(3,3), i, ratio, radius)
     }
     println(som.rows)
     println(som.columns)
