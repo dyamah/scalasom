@@ -7,6 +7,7 @@ import scala.util.Random
  * Created by sakaisawayuya on 2016/02/02.
  */
 class SOMBuilder {
+  /*
   var row: Int = 5
   var column: Int = 5
   var dim: Int = 10
@@ -105,4 +106,5 @@ class SOMBuilder {
     val bestCell = som.matrix.sortWith(_.vector.distance(vector) < _.vector.distance(vector)).head
     bestCell
   }
+  */
 }
