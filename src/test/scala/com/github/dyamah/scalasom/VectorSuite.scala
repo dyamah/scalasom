@@ -6,7 +6,7 @@ import org.scalatest.FunSuite
  * Created by sakaisawayuya on 2016/01/20.
  */
 class VectorSuite extends FunSuite {
-
+  /*
   val vector1 = new VectorEx(3, 1)
   val vector2 = new VectorEx(Array(1.0, 2.0, 3.0, 4.0))
   val vector3 = new VectorEx(5, 1)
@@ -51,5 +51,5 @@ class VectorSuite extends FunSuite {
     assert(vector2.Size() == Math.sqrt(30))
     assert(vector3.Size() == Math.sqrt(5))
   }
-
+  */
 }
