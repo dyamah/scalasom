@@ -25,25 +25,38 @@ class VectorImplTest extends FunSuite {
     assert(vector3.size == 5)
     assert(vector4.size == 5)
   }
-  /*
+
   test("test$plus") {
-
-  }
-
-  test("testApply") {
-
+    val vector = vector3+vector4
+    assert(vector(0) == 2)
+    assert(vector(1) == 3)
+    assert(vector(2) == 4)
+    assert(vector(3) == 5)
+    assert(vector(4) == 6)
   }
 
   test("test$minus") {
-
+    val vector = vector3-vector4
+    assert(vector(0) == 0)
+    assert(vector(1) == -1)
+    assert(vector(2) == -2)
+    assert(vector(3) == -3)
+    assert(vector(4) == -4)
   }
 
   test("test$times") {
+    val dot = vector3*vector4
+    assert(dot == 15)
 
   }
 
-  test("test$times") {
-
+  test("test$times$scala") {
+    val vector = vector4 * 2
+    assert(vector(0) == 2)
+    assert(vector(1) == 4)
+    assert(vector(2) == 6)
+    assert(vector(3) == 8)
+    assert(vector(4) == 10)
   }
-  */
+
 }
