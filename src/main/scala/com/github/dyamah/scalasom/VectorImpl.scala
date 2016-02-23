@@ -2,6 +2,18 @@ package com.github.dyamah.scalasom
 
 class VectorImpl private (private val vector : Array[Double])  extends Vector {
 
+  // Add and multiply by prime numbers
+  override def hashCode = 31 + vector.length
+
+  override def equals(other:Any) = other match {
+    case that: VectorImpl =>
+      // もっといいやり方ある？
+      (that canEqual this) && (vector.zipWithIndex.filter(d => d._1 != that.vector(d._2)).length == 0)
+    case _ => false
+  }
+  // Pointを継承した他のクラスのインスタンスでないかチェック
+  def canEqual(other:Any) = other.isInstanceOf[VectorImpl]
+
   def this(seq: Seq[Double]){
     this({
       val array = new Array[Double](seq.size)

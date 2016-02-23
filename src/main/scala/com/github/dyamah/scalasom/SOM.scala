@@ -32,10 +32,9 @@ trait SOM {
     * @param vector 入力ベクトル
     * @param t 時間（学習回数）
     * @param radius t における更新半径の値を返す関数
-    * @param learningRate t における学習率の値を返す関数
     * @param influenceRate 影響率
     */
-  def train(vector : Vector, t: Int, radius : Int => Double, learningRate : Int => Double, influenceRate : (Double, Double) => Double) : SOM
+  def train(vector : Vector, t: Int, radius : Int => Double, influenceRate : (Double, Double) => Double) : SOM
 
   /** マップ上で入力ベクトルxと最も類似したベクトルを持つセルを返す
     *
@@ -67,13 +66,13 @@ class SOMImpl (private val cells: Seq[Cell]) extends SOM {
   // initVectorGenerator は引数を取らない形に変更
   def this(rows: Int = 5, columns: Int = 5,
            initVectorGenerator : () => Vector = { () => new VectorImpl(Seq(0,0,0))} ) = {
-    this((for (i <- 0 until rows; j <- 0 until columns) yield Cell(i, j, initVectorGenerator())).toSeq)
+    this((for (i <- 1 to rows; j <- 1 to columns) yield Cell(i, j, initVectorGenerator())).toSeq)
   }
 
   def bestMatchingCell(vector: Vector): Option[Cell] = cells.sortBy { _.vector.distance(vector) }.headOption
 
   // 学習率の関数などの形を訂正（http://www.saedsayad.com/clustering_som.htm を参考に）
-  def train(vector : Vector, t: Int, radius : Int => Double, learningRate : Int => Double, influenceRate : (Double, Double) => Double): SOMImpl = {
+  def train(vector : Vector, t: Int, radius : Int => Double, influenceRate : (Double, Double) => Double): SOMImpl = {
 
     bestMatchingCell(vector).map {
       bmc =>
@@ -84,13 +83,13 @@ class SOMImpl (private val cells: Seq[Cell]) extends SOM {
         new SOMImpl(
           iterator.map {
             cell =>
-              if (cell.distance(bmc) < radius_) {
-                val u = (vector -  cell.vector) * (learningRate(t) * influenceRate(distance, radius_))
+              if (cell.distance(bmc) <= radius_) {
+                val u = (vector -  cell.vector) * (0.1 * radius_ * influenceRate(distance, radius_))
                 Cell(cell.i, cell.j, cell.vector + u )
               }
               else cell
 
-          }.toSeq)
+          }.toVector)
     }.getOrElse(this)
   }
 }
