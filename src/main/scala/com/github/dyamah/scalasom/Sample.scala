@@ -26,23 +26,25 @@ object Sample {
     println(v1.distance(v1))
     println(v1.distance(v2))
       **/
-    def initVectorGenerator (i: Int, j: Int) : Vector = {
+    def initVectorGenerator () : Vector = {
       new VectorImpl(for (h <- 0 until 3) yield Random.nextDouble())
     }
-    def ratio(time: Int) : Double = {
+    def learningRate(time: Int) : Double = {
       val init = 0.1
-      val total = 250.0
+      val total = 1000.0
       init*math.exp(-time/total)
     }
-    def radius(time: Int, distance: Double) : Double = {
-      def sigmoid(): Double = 1.0 / (1 + math.exp(-time))
-      math.exp(-math.pow(distance, 2) / (2*math.pow(sigmoid(), 2)))
+    def influenceRate(distance: Double, radius: Double) : Double = {
+      math.exp(-math.pow(distance, 2) / (2*math.pow(radius, 2)))
+    }
+    def radius(time: Int) : Double = {
+      val init = 2
+      val total = 1000.0
+      math.ceil(init*math.exp(-time/total))
     }
 
-    var som = new SOMImpl(5, 5, initVectorGenerator)
-    for (i <- 0 until 1000) {
-      som = som.train(initVectorGenerator(3,3), i, ratio, radius)
-    }
+    val data = for (i <- 0 until 1000) yield initVectorGenerator()
+    val som = data.zipWithIndex.foldLeft(new SOMImpl(10, 10, initVectorGenerator))((z, d) => z.train(d._1, d._2+1, radius, learningRate, influenceRate))
     println(som.rows)
     println(som.columns)
   }
