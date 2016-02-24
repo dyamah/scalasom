@@ -89,7 +89,7 @@ class SOMImpl (private val cells: Seq[Cell]) extends SOM {
               }
               else cell
 
-          }.toVector)
+          }.toSeq)
     }.getOrElse(this)
   }
 }
