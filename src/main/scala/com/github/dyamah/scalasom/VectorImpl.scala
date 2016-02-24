@@ -8,7 +8,7 @@ class VectorImpl private (private val vector : Array[Double])  extends Vector {
   override def equals(other:Any) = other match {
     case that: VectorImpl =>
       // もっといいやり方ある？
-      (that canEqual this) && (vector.zipWithIndex.filter(d => d._1 != that.vector(d._2)).length == 0)
+      (that canEqual this) && (vector.zipWithIndex.filter(d => d._1 == that.vector(d._2)).length == vector.length)
     case _ => false
   }
   // Pointを継承した他のクラスのインスタンスでないかチェック
