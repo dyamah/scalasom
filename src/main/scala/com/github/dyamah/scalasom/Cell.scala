@@ -13,7 +13,7 @@ case class Cell(i: Int, j: Int, vector: Vector) {
       (that canEqual this) && (this.i == that.i) && (this.j == that.j) && (this.vector == that.vector)
     case _ => false
   }
-  // Pointを継承した他のクラスのインスタンスでないかチェック
+
   def canEqual(other:Any) = other.isInstanceOf[Cell]
 
   // cell 間の距離を定義

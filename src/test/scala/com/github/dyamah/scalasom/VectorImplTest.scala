@@ -12,6 +12,12 @@ class VectorImplTest extends FunSuite {
   val vector3 = new VectorImpl(Seq(1, 1, 1, 1, 1))
   val vector4 = new VectorImpl(Seq(1, 2, 3, 4, 5))
 
+  test("testEquals") {
+    assert(vector1 == (new VectorImpl(List(1, 3, 5))))
+    assert(vector1 != (new VectorImpl(List(5, 3, 1))))
+    assert(vector1 != (new VectorImpl(List(1, 3, 5, 6))))
+    assert(vector1 != (new VectorImpl(List(1, 3))))
+  }
 
   test("testDistance") {
     assert(vector1.distance(vector1) == 0)

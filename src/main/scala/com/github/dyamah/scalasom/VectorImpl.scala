@@ -7,11 +7,10 @@ class VectorImpl private (private val vector : Array[Double])  extends Vector {
 
   override def equals(other:Any) = other match {
     case that: VectorImpl =>
-      // もっといいやり方ある？
-      (that canEqual this) && (vector.zipWithIndex.filter(d => d._1 == that.vector(d._2)).length == vector.length)
+      (that canEqual this) && (vector sameElements that.vector)
     case _ => false
   }
-  // Pointを継承した他のクラスのインスタンスでないかチェック
+
   def canEqual(other:Any) = other.isInstanceOf[VectorImpl]
 
   def this(seq: Seq[Double]){

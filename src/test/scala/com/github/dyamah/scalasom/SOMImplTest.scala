@@ -7,20 +7,6 @@ import org.scalatest.FunSuite
  */
 class SOMImplTest extends FunSuite {
 
-  /*
-  val cells = List(
-    Cell(1, 1, new VectorImpl(List(1, 1, 1))),
-    Cell(1, 2, new VectorImpl(List(1, 1, 1))),
-    Cell(1, 3, new VectorImpl(List(1, 1, 1))),
-    Cell(2, 1, new VectorImpl(List(1, 1, 1))),
-    Cell(2, 2, new VectorImpl(List(1, 1, 1))),
-    Cell(2, 3, new VectorImpl(List(1, 1, 1))),
-    Cell(3, 1, new VectorImpl(List(1, 1, 1))),
-    Cell(3, 2, new VectorImpl(List(1, 1, 1))),
-    Cell(3, 3, new VectorImpl(List(1, 1, 1)))
-  )
-  */
-
   val cell1 = Cell(1, 1, new VectorImpl(List(1, 1, 1)))
   val cell2 = Cell(1, 2, new VectorImpl(List(2, 2, 2)))
   val cell3 = Cell(1, 3, new VectorImpl(List(3, 3, 3)))
@@ -34,7 +20,6 @@ class SOMImplTest extends FunSuite {
   val cells = List(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9)
 
   val som = new SOMImpl(cells)
-
 
   test("testBestMatchingCell") {
     assert(som.bestMatchingCell(new VectorImpl(List(8.5, 8.5, 8.5))).get.equals(cell8))
@@ -64,7 +49,6 @@ class SOMImplTest extends FunSuite {
     assert(iterator1.next().equals(cell8))
     assert(iterator1.next().equals(cell9))
 
-
     val som2 = som1.train(new VectorImpl(List(8, 8, 8)), 1, radius, influenceRate)
     val iterator2 = som2.iterator
     assert(iterator2.next().equals(Cell(1, 1, new VectorImpl(List(1.1, 1.1, 1.1)))))
@@ -89,6 +73,6 @@ class SOMImplTest extends FunSuite {
     assert(iterator.next().equals(cell7))
     assert(iterator.next().equals(cell8))
     assert(iterator.next().equals(cell9))
+    assert(iterator.hasNext == false)
   }
-
 }
