@@ -18,8 +18,10 @@ class SOMImplTest extends FunSuite {
   val cell9 = Cell(3, 3, new VectorImpl(List(9, 9, 9)))
 
   val cells = List(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9)
-
   val som = new SOMImpl(cells)
+
+  val cells2 = List(cell1, cell2, cell3, cell4, cell5, cell6)
+  val som2 = new SOMImpl(cells2)
 
   test("testBestMatchingCell") {
     assert(som.bestMatchingCell(new VectorImpl(List(8.5, 8.5, 8.5))).get.equals(cell8))
@@ -28,10 +30,12 @@ class SOMImplTest extends FunSuite {
 
   test("testColumns") {
     assert(som.columns == 3)
+    assert(som2.columns == 3)
   }
 
   test("testRows") {
     assert(som.rows == 3)
+    assert(som2.rows == 2)
   }
 
   test("testTrain") {
