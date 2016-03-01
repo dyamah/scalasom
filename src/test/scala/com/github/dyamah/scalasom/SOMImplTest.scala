@@ -15,8 +15,11 @@ class SOMImplTest extends FunSuite {
   val som = SOMImpl(3, 3, initVectorGenerator)
   val som2 = SOMImpl(2, 4, initVectorGenerator)
 
+  // ファクトリメソッドによって全てのセルが同じベクトルを持つため全てセル列の最初が bmc で出てくる
   test("testBestMatchingCell") {
+    assert(som.bestMatchingCell(new VectorImpl(List(0.5, 0.5, 0.5))).get == Cell(1, 1, initVectorGenerator()))
     assert(som.bestMatchingCell(new VectorImpl(List(1, 1, 1))).get == Cell(1, 1, initVectorGenerator()))
+    assert(som.bestMatchingCell(new VectorImpl(List(2, 2, 2))).get == Cell(1, 1, initVectorGenerator()))
   }
 
   test("testRows") {
@@ -30,7 +33,7 @@ class SOMImplTest extends FunSuite {
     assert(som2.columns == 4)
   }
 
-  
+  // 自分で作ったデフォルトの 3×3 のSOM と入力に対して、正しい出力が返ってきているかテスト
   test("testTrain") {
     def influenceRate(distance: Double, radius: Double) : Double = {1.0}
     def radius(time: Int) : Double = {1.0}
@@ -60,7 +63,8 @@ class SOMImplTest extends FunSuite {
     assert(iterator2.next() == Cell(3, 3, initVectorGenerator()))
   }
   
-
+  // セル列をコンストラクタで受け取らないことで順番はこちらで制御。
+  // 行順で出てくるように設計。
   test("testIterator") {
     val iterator = som.iterator
     assert(iterator.next() == Cell(1, 1, initVectorGenerator()))

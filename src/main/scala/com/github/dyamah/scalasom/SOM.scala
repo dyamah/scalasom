@@ -58,7 +58,7 @@ object SOMImpl {
   }
 }
 
-// private を付けることで
+// private を付けることでセル列をコンストラクタが受け取らないように設定
 class SOMImpl private (private val cells: Seq[Cell]) extends SOM {
 
   require(cells.nonEmpty)
