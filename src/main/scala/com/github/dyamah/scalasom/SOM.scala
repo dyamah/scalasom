@@ -44,6 +44,9 @@ trait SOM {
 
 }
 
+object SOMImpl {
+
+}
 
 class SOMImpl (private val cells: Seq[Cell]) extends SOM {
 
