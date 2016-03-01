@@ -24,8 +24,8 @@ class SOMImplTest extends FunSuite {
   val som2 = new SOMImpl(cells2)
 
   test("testBestMatchingCell") {
-    assert(som.bestMatchingCell(new VectorImpl(List(8.5, 8.5, 8.5))).get.equals(cell8))
-    assert(som.bestMatchingCell(new VectorImpl(List(9, 9, 9))).get.equals(cell9))
+    assert(som.bestMatchingCell(new VectorImpl(List(8.5, 8.5, 8.5))) == cell8)
+    assert(som.bestMatchingCell(new VectorImpl(List(9, 9, 9))).get == cell9)
   }
 
   test("testColumns") {
@@ -43,40 +43,40 @@ class SOMImplTest extends FunSuite {
     def radius(time: Int) : Double = {1.0}
     val som1 = som.train(new VectorImpl(List(2, 2, 2)), 1, radius, influenceRate)
     val iterator1 = som1.iterator
-    assert(iterator1.next().equals(Cell(1, 1, new VectorImpl(List(1.1, 1.1, 1.1)))))
-    assert(iterator1.next().equals(cell2))
-    assert(iterator1.next().equals(Cell(1, 3, new VectorImpl(List(2.9, 2.9, 2.9)))))
-    assert(iterator1.next().equals(cell4))
-    assert(iterator1.next().equals(Cell(2, 2, new VectorImpl(List(4.7, 4.7, 4.7)))))
-    assert(iterator1.next().equals(cell6))
-    assert(iterator1.next().equals(cell7))
-    assert(iterator1.next().equals(cell8))
-    assert(iterator1.next().equals(cell9))
+    assert(iterator1.next() == Cell(1, 1, new VectorImpl(List(1.1, 1.1, 1.1))))
+    assert(iterator1.next() == cell2)
+    assert(iterator1.next() == Cell(1, 3, new VectorImpl(List(2.9, 2.9, 2.9))))
+    assert(iterator1.next() == cell4)
+    assert(iterator1.next() == Cell(2, 2, new VectorImpl(List(4.7, 4.7, 4.7))))
+    assert(iterator1.next() == cell6)
+    assert(iterator1.next() == cell7)
+    assert(iterator1.next() == cell8)
+    assert(iterator1.next() == cell9)
 
     val som2 = som1.train(new VectorImpl(List(8, 8, 8)), 1, radius, influenceRate)
     val iterator2 = som2.iterator
-    assert(iterator2.next().equals(Cell(1, 1, new VectorImpl(List(1.1, 1.1, 1.1)))))
-    assert(iterator2.next().equals(cell2))
-    assert(iterator2.next().equals(Cell(1, 3, new VectorImpl(List(2.9, 2.9, 2.9)))))
-    assert(iterator2.next().equals(cell4))
-    assert(iterator2.next().equals(Cell(2, 2, new VectorImpl(List(5.03, 5.03, 5.03)))))
-    assert(iterator2.next().equals(cell6))
-    assert(iterator2.next().equals(Cell(3, 1, new VectorImpl(List(7.1, 7.1, 7.1)))))
-    assert(iterator2.next().equals(cell8))
-    assert(iterator2.next().equals(Cell(3, 3, new VectorImpl(List(8.9, 8.9, 8.9)))))
+    assert(iterator2.next() == Cell(1, 1, new VectorImpl(List(1.1, 1.1, 1.1))))
+    assert(iterator2.next() == cell2)
+    assert(iterator2.next() == Cell(1, 3, new VectorImpl(List(2.9, 2.9, 2.9))))
+    assert(iterator2.next() == cell4)
+    assert(iterator2.next() == Cell(2, 2, new VectorImpl(List(5.03, 5.03, 5.03))))
+    assert(iterator2.next() == cell6)
+    assert(iterator2.next() == Cell(3, 1, new VectorImpl(List(7.1, 7.1, 7.1))))
+    assert(iterator2.next() == cell8)
+    assert(iterator2.next() == Cell(3, 3, new VectorImpl(List(8.9, 8.9, 8.9))))
   }
 
   test("testIterator") {
     val iterator = som.iterator
-    assert(iterator.next().equals(cell1))
-    assert(iterator.next().equals(cell2))
-    assert(iterator.next().equals(cell3))
-    assert(iterator.next().equals(cell4))
-    assert(iterator.next().equals(cell5))
-    assert(iterator.next().equals(cell6))
-    assert(iterator.next().equals(cell7))
-    assert(iterator.next().equals(cell8))
-    assert(iterator.next().equals(cell9))
+    assert(iterator.next() == cell1)
+    assert(iterator.next() == cell2)
+    assert(iterator.next() == cell3)
+    assert(iterator.next() == cell4)
+    assert(iterator.next() == cell5)
+    assert(iterator.next() == cell6)
+    assert(iterator.next() == cell7)
+    assert(iterator.next() == cell8)
+    assert(iterator.next() == cell9)
     assert(iterator.hasNext == false)
   }
 }
