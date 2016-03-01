@@ -41,8 +41,8 @@ class SOMImplTest extends FunSuite {
   test("testTrain") {
     def influenceRate(distance: Double, radius: Double) : Double = {1.0}
     def radius(time: Int) : Double = {1.0}
-    val som1 = som.train(new VectorImpl(List(2, 2, 2)), 1, radius, influenceRate)
-    val iterator1 = som1.iterator
+    val somTrain_1 = som.train(new VectorImpl(List(2, 2, 2)), 1, radius, influenceRate)
+    val iterator1 = somTrain_1.iterator
     assert(iterator1.next() == Cell(1, 1, new VectorImpl(List(1.1, 1.1, 1.1))))
     assert(iterator1.next() == cell2)
     assert(iterator1.next() == Cell(1, 3, new VectorImpl(List(2.9, 2.9, 2.9))))
@@ -53,8 +53,8 @@ class SOMImplTest extends FunSuite {
     assert(iterator1.next() == cell8)
     assert(iterator1.next() == cell9)
 
-    val som2 = som1.train(new VectorImpl(List(8, 8, 8)), 1, radius, influenceRate)
-    val iterator2 = som2.iterator
+    val somTrain_2 = somTrain_1.train(new VectorImpl(List(8, 8, 8)), 1, radius, influenceRate)
+    val iterator2 = somTrain_2.iterator
     assert(iterator2.next() == Cell(1, 1, new VectorImpl(List(1.1, 1.1, 1.1))))
     assert(iterator2.next() == cell2)
     assert(iterator2.next() == Cell(1, 3, new VectorImpl(List(2.9, 2.9, 2.9))))
@@ -79,4 +79,5 @@ class SOMImplTest extends FunSuite {
     assert(iterator.next() == cell9)
     assert(iterator.hasNext == false)
   }
+
 }
