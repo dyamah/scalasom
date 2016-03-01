@@ -46,9 +46,20 @@ trait SOM {
 
 object SOMImpl {
 
+  /** ファクトリメソッド
+    *
+    * @param rows 横のセル数。デフォルトは5
+    * @param columns 縦のセル数。デフォルトは5
+    * @param initVectorGenerator 座標i,jのセルに対する初期ベクトルを生成する関数
+    */
+  def apply(rows: Int = 5, columns: Int = 5,
+            initVectorGenerator : () => Vector = { () => new VectorImpl(Seq(0,0,0))} ) : SOMImpl = {
+    new SOMImpl((for (i <- 1 to rows; j <- 1 to columns) yield Cell(i, j, initVectorGenerator())).toSeq)
+  }
 }
 
-class SOMImpl (private val cells: Seq[Cell]) extends SOM {
+// private を付けることで
+class SOMImpl private (private val cells: Seq[Cell]) extends SOM {
 
   require(cells.nonEmpty)
 
@@ -59,18 +70,6 @@ class SOMImpl (private val cells: Seq[Cell]) extends SOM {
   val rows : Int = cells.map(_.i).max
 
   val columns : Int = cells.map(_.j).max
-
-  /** コンストラクタ
-    *
-    * @param rows 横のセル数。デフォルトは5
-    * @param columns 縦のセル数。デフォルトは5
-    * @param initVectorGenerator 座標i,jのセルに対する初期ベクトルを生成する関数
-    */
-  // initVectorGenerator は引数を取らない形に変更
-  def this(rows: Int = 5, columns: Int = 5,
-           initVectorGenerator : () => Vector = { () => new VectorImpl(Seq(0,0,0))} ) = {
-    this((for (i <- 1 to rows; j <- 1 to columns) yield Cell(i, j, initVectorGenerator())).toSeq)
-  }
 
   def bestMatchingCell(vector: Vector): Option[Cell] = cells.sortBy { _.vector.distance(vector) }.headOption
 

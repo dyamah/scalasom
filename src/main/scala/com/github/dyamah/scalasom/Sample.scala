@@ -20,9 +20,8 @@ object Sample {
     }
 
     val data = (1 to 1000).map {i => (initVectorGenerator(), i)}
-    val initSom = new SOMImpl(10, 10, initVectorGenerator)
+    val initSom = SOMImpl(10, 10, initVectorGenerator)
     val som = data.foldLeft(initSom)((z, d) => z.train(d._1, d._2, radius, influenceRate))
-    //val som = data.foldLeft(new SOMImpl(10, 10, initVectorGenerator))((z, d) => z.train(d._1, d._2, radius, influenceRate))
     println(som.rows)
     println(som.columns)
   }
